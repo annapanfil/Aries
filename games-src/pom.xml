@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>put.ai.games</groupId>
+	<artifactId>Games</artifactId>
+	<version>2.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Games</name>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+				<artifactId>maven-java-formatter-plugin</artifactId>
+				<version>0.4</version>
+				<configuration>
+					<configFile>${project.basedir}/../games-formatter.xml</configFile>
+					<lineEnding>LF</lineEnding>
+				</configuration>
+			</plugin>
+			<!-- Workaround for the feature/bug in OpenJDK/Maven https://stackoverflow.com/questions/50661648/spring-boot-fails-to-run-maven-surefire-plugin-classnotfoundexception-org-apache/50661649#50661649 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M5</version>
+				<configuration>
+					<argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+				</configuration>
+			</plugin>
+			<!-- /Workaround -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <show>private</show>
+                    <nohelp>true</nohelp>
+                </configuration>
+            </plugin>
+			<!-- TODO: https://maven.apache.org/plugins/maven-javadoc-plugin/examples/aggregate.html -->
+			<!-- TODO: check if show private works -->
+		</plugins>
+	</build>
+	<modules>
+		<module>BoardGame</module>
+		<module>CLI</module>
+		<module>GUI</module>
+		<module>BoardGameEngine</module>
+		<module>Tester</module>
+		<module>Players</module>
+		<module>Rules</module>
+		<module>RulesProvider</module>
+	</modules>
+</project>

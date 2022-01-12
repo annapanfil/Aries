@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/BoardGame/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BoardGame/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BoardGameEngine/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BoardGameEngine/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CLI/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CLI/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/GUI/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/GUI/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Players/MyPlayer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Players/MyPlayer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Players/NaivePlayer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Players/NaivePlayer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Players/NastyPlayer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Players/NastyPlayer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Players/NullPlayer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Players/NullPlayer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Players/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Players/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Rules/Aries/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Rules/Aries/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Rules/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Rules/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/RulesProvider/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/RulesProvider/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Tester/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Tester/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

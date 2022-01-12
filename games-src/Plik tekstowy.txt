@@ -1,0 +1,5 @@
+do naprawy mavena:
+mvn help:describe -DartifactId=maven-surefire-plugin -DgroupId=org.apache.maven.plugins
+
+wersja: 3.0.0-M5
+dopisać do głównego pom.xml
