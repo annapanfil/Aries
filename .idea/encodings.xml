@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/games-src/BoardGame/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/BoardGame/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/BoardGameEngine/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/BoardGameEngine/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/CLI/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/CLI/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/GUI/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/GUI/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Players/NaivePlayer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Players/NaivePlayer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Players/NastyPlayer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Players/NastyPlayer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Players/NullPlayer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Players/NullPlayer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Players/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Players/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Rules/Aries/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Rules/Aries/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Rules/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Rules/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/RulesProvider/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/RulesProvider/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Tester/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/games-src/Tester/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

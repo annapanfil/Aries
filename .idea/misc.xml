@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/games-src/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/games-src/BoardGame/pom.xml" />
+        <option value="$PROJECT_DIR$/games-src/BoardGameEngine/pom.xml" />
+        <option value="$PROJECT_DIR$/games-src/CLI/pom.xml" />
+        <option value="$PROJECT_DIR$/games-src/GUI/pom.xml" />
+        <option value="$PROJECT_DIR$/games-src/Players/NaivePlayer/pom.xml" />
+        <option value="$PROJECT_DIR$/games-src/Players/NastyPlayer/pom.xml" />
+        <option value="$PROJECT_DIR$/games-src/Players/NullPlayer/pom.xml" />
+        <option value="$PROJECT_DIR$/games-src/Players/pom.xml" />
+        <option value="$PROJECT_DIR$/games-src/Rules/Aries/pom.xml" />
+        <option value="$PROJECT_DIR$/games-src/Rules/pom.xml" />
+        <option value="$PROJECT_DIR$/games-src/RulesProvider/pom.xml" />
+        <option value="$PROJECT_DIR$/games-src/Tester/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>

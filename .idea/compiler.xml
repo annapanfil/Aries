@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="Aries" target="1.8" />
+      <module name="BoardGame" target="1.8" />
+      <module name="BoardGameEngine" target="1.8" />
+      <module name="CLI" target="1.8" />
+      <module name="Games" target="1.8" />
+      <module name="GUI" target="1.8" />
+      <module name="NaivePlayer" target="1.8" />
+      <module name="NastyPlayer" target="1.8" />
+      <module name="NullPlayer" target="1.8" />
+      <module name="Players" target="1.8" />
+      <module name="Rules" target="1.8" />
+      <module name="RulesProvider" target="1.8" />
+      <module name="Tester" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
