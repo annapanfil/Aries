@@ -98,7 +98,7 @@ public class App {
 
                 @Override
                 public void update(Color c, Board b, Move m) {
-                    System.out.println(b);
+//                    System.out.println(b);
                 }
             });
         } catch (RuleViolationException ex) {

@@ -1,4 +1,5 @@
-package put.ai.games.aries;
+//IMPORTANT
+ package put.ai.games.aries;
 
 import java.util.Objects;
 import put.ai.games.game.Player.Color;

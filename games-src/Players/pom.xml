@@ -15,5 +15,6 @@
         <module>NaivePlayer</module>
         <module>NastyPlayer</module>
         <module>NullPlayer</module>
+        <module>MyPlayer</module>
   </modules>
 </project>

@@ -54,7 +54,7 @@ public class Wrapper extends Player implements Runnable {
 
     @Override
     public void run() {
-        System.err.printf("Setting affinity to %d\n", affinity);
+//        System.err.printf("Setting affinity to %d\n", affinity);
         PosixJNAAffinity.INSTANCE.setAffinity(affinity);
         try {
             while (!Thread.interrupted()) {
