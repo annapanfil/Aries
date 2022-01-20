@@ -8,16 +8,9 @@ import put.ai.games.game.Player;
 
 import java.util.List;
 
+import static java.lang.Math.min;
 
 public class MyPlayer extends Player {
-
-  private static class WinException extends Exception{
-    // Color winner;
-    //
-    // protected WinException(Color winner){
-    //   this.winner = winner;
-    // }
-  }
 
   boolean debug = true;
 
@@ -26,104 +19,49 @@ public class MyPlayer extends Player {
       return "Anna Panfil 145233";
   }
 
-
-  private int count_pieces(Color player, AriesBoard b){
-      int count = 0;
-
-      for (int x = 0; x < b.getSize(); x++) {
-          for (int y = 0; y < b.getSize(); y++) {
-              if (b.getState(x,y) == player) {
-                  count++;
-              }
-          }
-      }
-      return count;
+  private int getDistanceToWinningField(int x, int y, Color player, Board b){
+    if (player == Color.PLAYER1)
+      return 2 * b.getSize() - x - y; // win in bottom right corner
+    else
+      return x+y; // win on 0,0
   }
 
+  private int stateEvaluation(Board b){
+    /* Calculate objective function value */
 
-  private int getClosestTopLeft(Board b, Color player) throws WinException{
-    /* Look in array starting from the top left corner to find the closest piece (On^2)*/
-    if(b.getState(0,0) == player)
-      throw new WinException();  // winning state
+    Color player = getColor();
+    Color opponent = getOpponent(player);
+    AriesBoard board = (AriesBoard) b;
 
-    for (int k=1; k < b.getSize(); k++){
-      for (int i=0; i<k; i++){
-        for (int j=k; j>=0; j--){
-          if (b.getState(i,j) == player)
-            return i+j;  //IDEA: if 0th row or column, smaller (or return other number). Look in the 0th rows first
-        }
-      }
-    }
-    return Integer.MAX_VALUE;
-  }
+    int my_pieces = 0;
+    int opponents_pieces = 0;
+    int my_distance = Integer.MAX_VALUE;
+    int opponents_distance = Integer.MAX_VALUE;
 
-  private int getClosestBottomRight(Board b, Color player) throws WinException{
-    /* Look in array starting from the bottom right corner to find the closest piece (On^2)*/
-    int last_field = b.getSize()-1;
-
-    if (b.getState(last_field, last_field) == player){
-      throw new WinException();
-    }
-
-    for (int k=last_field; k > 0; k--){
-      for (int i=k; i<last_field; i++){
-        for (int j=last_field; j>=k; j--){
-          if (b.getState(i, j) == player)
-            return 2*last_field-i-j;
+    for (int i=0; i<board.getSize(); i++){
+      for (int j=0; j<board.getSize(); j++){
+          if (b.getState(i, j) == player){
+              my_pieces++;
+              my_distance = min(getDistanceToWinningField(i, j, player, board), my_distance);
+              if (my_distance == 0)
+                  return Integer.MIN_VALUE; //our winning move
           }
-        }
+          else if (b.getState(i, j) == opponent){
+              opponents_pieces++;
+              opponents_distance = min(getDistanceToWinningField(i, j, opponent, board), opponents_distance);
+
+              if (opponents_distance == 0)
+                  return Integer.MAX_VALUE; //their winning move
+          }
       }
-      return Integer.MAX_VALUE;
     }
-
-    private int getClosest(Board b, Color player) throws WinException{
-        if (player == Color.PLAYER1){
-            return getClosestBottomRight(b, player);
-        }
-        else
-            return getClosestTopLeft(b, player);
-    }
-
-  private int stateEvaluation(Move m, Board b){
-      /* Calculate objective function value */
-
-      AriesMove move = (AriesMove) m;
-      Color player = getColor();
-      Color opponent = getOpponent(player);
-      AriesBoard board = (AriesBoard) b;
-
-      if (debug){
-        System.out.print(move.toString());
-      }
-
-//      BoardState state = move.getDstState();
-//      board = boardState.state;
-
-      int my_pieces = count_pieces(player, board);
-      int opponents_pieces = count_pieces(opponent, board);
-      int my_distance, opponents_distance;
-
-      try{
-        my_distance = getClosest(b, player);
-      }
-      catch (WinException e){
-        return (int) Integer.MIN_VALUE; //our winning move
-      }
-
-      try{
-        opponents_distance = getClosest(b, opponent);
-      }
-      catch (WinException e){
-        return (int) Integer.MAX_VALUE; //their winning move
-      }
-
 
       if (debug){
         System.out.println("Pieces: My " + my_pieces + "Their "+ opponents_pieces);
         System.out.println("Distance: My " + my_distance + "Their " + opponents_distance);
       }
 
-      return 10*opponents_pieces + 9*my_distance - 8*my_pieces - 7*opponents_distance;
+      return 9*opponents_pieces + 10*my_distance - 8*my_pieces - 7*opponents_distance;
   }
 
 
@@ -131,17 +69,26 @@ public class MyPlayer extends Player {
     /* Choose move with minimum objective function value */
 
     //self.getTime()
-    Move best_move = null;
+    AriesMove best_move = null;
     int best_move_value = Integer.MAX_VALUE;
-    Move curr_move;
+    AriesMove curr_move;
     int curr_move_value;
+    Board boardNew;
 
       for (Move move : moves) {
-          curr_move = move;
+          curr_move = (AriesMove) move;
 
-          curr_move_value = stateEvaluation(curr_move, board);
-          System.out.println(curr_move_value);
-          if (curr_move_value == Integer.MIN_VALUE)
+          boardNew = board.clone();
+          boardNew.doMove(move);
+
+
+
+          curr_move_value = stateEvaluation(boardNew);
+          if (debug){
+              System.out.println(move.toString() + " " + curr_move_value);
+          }
+
+          if (curr_move_value == Integer.MIN_VALUE) // winning move
               return curr_move;
           if (curr_move_value < best_move_value) {
               best_move = curr_move;
@@ -154,12 +101,11 @@ public class MyPlayer extends Player {
 
   @Override
   public Move nextMove(Board b) {
+    Color player = getColor();
+    System.out.print(player + " ");
 
-      Color player = getColor();
-      System.out.print(player + " ");
+    List<Move> moves = b.getMovesFor(getColor());
 
-      List<Move> moves = b.getMovesFor(getColor());
-
-      return chooseBestMove(moves, b);
+    return chooseBestMove(moves, b);
   }
 }
