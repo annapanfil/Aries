@@ -1,4 +1,4 @@
-//IMPORTANT
+//TODO
 
 package put.ai.games.game;
 
