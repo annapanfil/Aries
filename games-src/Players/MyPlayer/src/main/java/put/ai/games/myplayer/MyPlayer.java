@@ -1,15 +1,14 @@
 package put.ai.games.myplayer;
 
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 import put.ai.games.aries.AriesBoard;
 import put.ai.games.aries.AriesMove;
 import put.ai.games.game.Board;
 import put.ai.games.game.Move;
 import put.ai.games.game.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class MyPlayer extends Player {
@@ -126,7 +125,7 @@ public class MyPlayer extends Player {
       //TODO: minus unarny = przeciążyć
   }
 
-  BestMove NegMax(Board board, Color player, int depth){
+  BestMove NegMax(Board board, Color player, int depth, long endRoundTime){
       System.out.println("\nNew recursion " + depth + " " + player);
       int val;
       if ((val = checkWinning(board, player)) != 0){
@@ -143,14 +142,22 @@ public class MyPlayer extends Player {
       BestMove curr_move;
       BestMove best_move = new BestMove(Integer.MIN_VALUE+1, moves.get(0));
       Board boardNew;
-
+      long start, end, duration;
+      long maxTime = 0;
 
       for (Move move : moves) {
           System.out.println(move.toString());
+
+          if (System.nanoTime() + maxTime > endRoundTime) {
+              System.out.println("Out of time :( " + System.nanoTime() + maxTime + " " + endRoundTime);
+              break;  //out of time
+          }
+
+          start = System.nanoTime();
           boardNew = board.clone();
           boardNew.doMove(move);
 
-          curr_move = NegMax(boardNew, getOpponent(player), depth - 1);
+          curr_move = NegMax(boardNew, getOpponent(player), depth - 1, endRoundTime);
           curr_move.value = -curr_move.value;
 
           if (curr_move.value > best_move.value) {
@@ -159,6 +166,9 @@ public class MyPlayer extends Player {
               System.out.println("New best " + player +" " + curr_move.move.toString() + " "+ curr_move.value);
               if (best_move.value == Integer.MAX_VALUE) break; // winning move
           }
+          end = System.nanoTime();
+          if ((duration = end - start) > maxTime) maxTime = duration;
+
           System.out.println("Value for move " + curr_move.move.toString() + " "+ curr_move.value + " for " + player);
           //TODO: odcięcia
       }
@@ -169,9 +179,12 @@ public class MyPlayer extends Player {
 
   @Override
   public Move nextMove(Board b) {
-    System.out.println ("NOWY RUCH " + getColor() + "\n-----------------------------");
+    Color player = getColor();
+    System.out.println ("NOWY RUCH " + player + "\n-----------------------------");
 
-    BestMove bestMove = NegMax(b, getColor(), MAX_DEPTH);
+
+    long endRoundTime = System.nanoTime() + getTime()*1000000;
+    BestMove bestMove = NegMax(b, player, MAX_DEPTH, endRoundTime);
 
     return bestMove.move;
   }
