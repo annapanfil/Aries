@@ -79,7 +79,6 @@ public class MyPlayer extends Player {
   Move chooseBestMove(List<Move> moves, Board board){
     /* Choose move with minimum objective function value */
 
-    //self.getTime()
     AriesMove best_move = null;
     int best_move_value = Integer.MAX_VALUE;
     AriesMove curr_move;
@@ -121,12 +120,18 @@ public class MyPlayer extends Player {
            this.move = (AriesMove) move;
        }
 
-      //TODO: porównanie - przeciążyć operator
-      //TODO: minus unarny = przeciążyć
-  }
+       BestMove neg(){ //super, much more readable than -
+          return new BestMove(-this.value, this.move);
+       }
 
-  BestMove NegMax(Board board, Color player, int depth, long endRoundTime){
-      System.out.println("\nNew recursion " + depth + " " + player);
+       @Override
+       public String toString() {
+           return value + " " + move.toString();
+       }
+   }
+
+  BestMove NegMax(Board board, Color player, int depth, BestMove alpha, BestMove beta, long endRoundTime){
+      System.out.println("\n New recursion " + depth + " " + player + " a " + alpha + " B " + beta);
       int val;
       if ((val = checkWinning(board, player)) != 0){
           System.out.println("Win " + player + " "+ val + " on depth " + depth);
@@ -140,16 +145,14 @@ public class MyPlayer extends Player {
       List<Move> moves = board.getMovesFor(player);
 
       BestMove curr_move;
-      BestMove best_move = new BestMove(Integer.MIN_VALUE+1, moves.get(0));
       Board boardNew;
       long start, end, duration;
       long maxTime = 0;
 
       for (Move move : moves) {
-          System.out.println(move.toString());
-
           if (System.nanoTime() + maxTime > endRoundTime) {
               System.out.println("Out of time :( " + System.nanoTime() + maxTime + " " + endRoundTime);
+              //TODO: use bestMove()
               break;  //out of time
           }
 
@@ -157,23 +160,28 @@ public class MyPlayer extends Player {
           boardNew = board.clone();
           boardNew.doMove(move);
 
-          curr_move = NegMax(boardNew, getOpponent(player), depth - 1, endRoundTime);
+          curr_move = NegMax(boardNew, getOpponent(player), depth - 1, beta.neg(), alpha.neg(), endRoundTime);
           curr_move.value = -curr_move.value;
 
-          if (curr_move.value > best_move.value) {
+          if (curr_move.value > alpha.value) {
+
               curr_move.move = (AriesMove) move;
-              best_move = curr_move;
-              System.out.println("New best " + player +" " + curr_move.move.toString() + " "+ curr_move.value);
-              if (best_move.value == Integer.MAX_VALUE) break; // winning move
+              alpha = curr_move;
+              System.out.println("New best " + player +" " + curr_move);
+              if (alpha.value == Integer.MAX_VALUE) break; // winning move
+          }
+
+          if (alpha.value >= beta.value) {
+              System.out.println("Return beta for "+ player + " depth "+ depth  + ": " + beta);
+              return beta;
           }
           end = System.nanoTime();
           if ((duration = end - start) > maxTime) maxTime = duration;
 
-          System.out.println("Value for move " + curr_move.move.toString() + " "+ curr_move.value + " for " + player);
-          //TODO: odcięcia
+          System.out.println("Value for move " + move.toString() + ": " + curr_move.value + " for " + player);
       }
-      System.out.println("Best move for "+ player + " depth "+ depth  + ": " + best_move.move.toString() + " " + best_move.value);
-      return best_move;
+      System.out.println("Best move for "+ player + " depth "+ depth  + ": " + alpha);
+      return alpha;
   }
 
 
@@ -184,7 +192,12 @@ public class MyPlayer extends Player {
 
 
     long endRoundTime = System.nanoTime() + getTime()*1000000;
-    BestMove bestMove = NegMax(b, player, MAX_DEPTH, endRoundTime);
+    BestMove bestMove = NegMax(b,
+                                player,
+                                MAX_DEPTH,
+                                new BestMove(Integer.MIN_VALUE+1),
+                                new BestMove(Integer.MAX_VALUE),
+                                endRoundTime);
 
     return bestMove.move;
   }
