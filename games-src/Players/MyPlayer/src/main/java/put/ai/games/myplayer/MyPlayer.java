@@ -8,14 +8,12 @@ import put.ai.games.game.Player;
 
 import java.util.List;
 
-import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static java.lang.Thread.sleep;
 
 public class MyPlayer extends Player {
 
   boolean debug = true;
-  int MAX_DEPTH = 2;
+  int MAX_DEPTH = 3;
   static int INFTY = Integer.MAX_VALUE;
   static int LOSE = -INFTY + 1;
   static int WIN = INFTY - 1;
@@ -33,7 +31,6 @@ public class MyPlayer extends Player {
   }
 
   int checkWinning(Board b, Color player){
-      System.out.println(b.getState(b.getSize()-1, b.getSize()-1));
       if (b.getState(0,0) == Color.PLAYER2){
           if (player == Color.PLAYER2) return WIN;
           else return LOSE;
@@ -134,16 +131,15 @@ public class MyPlayer extends Player {
    }
 
   BestMove NegMax(Board board, Color player, int depth, BestMove alpha, BestMove beta, long endRoundTime){
-      System.out.println("\n New recursion " + depth + " " + player + " a " + alpha + " B " + beta);
+//      System.out.println("\n New recursion " + depth + " " + player + " a " + alpha + " B " + beta);
       int val;
       if ((val = checkWinning(board, player)) != 0){
-          System.out.println("Win " + player + " "+ val + " on depth " + depth);
+//          System.out.println("Win " + player + " "+ val + " on depth " + depth);
           return new BestMove(val);
       }
-      else System.out.println("No win " + player + " "+ val + " on depth " + depth);
       if (depth == 0){
           val = stateEvaluation(board, player);
-          System.out.println("return " + val + " (" + player +")");
+//          System.out.println("return " + val + " (" + player +")");
           return new BestMove(val);
       }
 
@@ -155,7 +151,7 @@ public class MyPlayer extends Player {
       long maxTime = 0;
 
       for (Move move : moves) {
-          System.out.println("Analiza ruchu " + move.toString() +" depth: "+  depth + " " +player);
+//          System.out.println("Analiza ruchu " + move.toString() +" depth: "+  depth + " " +player);
           if (System.nanoTime() + maxTime > endRoundTime) {
               System.out.println(player + "Out of time :( " + System.nanoTime() + maxTime + " " + endRoundTime);
               //TODO: use bestMove()
@@ -174,23 +170,19 @@ public class MyPlayer extends Player {
 
               curr_move.move = (AriesMove) move;
               alpha = curr_move;
-              System.out.println("New best " + player +" " + curr_move);
-//              if (alpha.value == WIN) break; // winning move
-          }
-          else{
-              System.out.println("No new best " + player +" " + curr_move + move.toString() + "a: " + alpha);
+//              System.out.println("New best " + player +" " + curr_move);
           }
 
           if (alpha.value >= beta.value) {
-              System.out.println("Return beta for "+ player + " depth "+ depth  + ": " + beta);
+//              System.out.println("Return beta for "+ player + " depth "+ depth  + ": " + beta);
               return beta;
           }
           end = System.nanoTime();
           if ((duration = end - start) > maxTime) maxTime = duration;
 
-          System.out.println("Value for move " + move.toString() + ": " + curr_move.value + " for " + player);
+//          System.out.println("Value for move " + move.toString() + ": " + curr_move.value + " for " + player);
       }
-      System.out.println("Best move for "+ player + " depth "+ depth  + ": " + alpha);
+//      System.out.println("Best move for "+ player + " depth "+ depth  + ": " + alpha);
       return alpha;
   }
 
@@ -208,12 +200,6 @@ public class MyPlayer extends Player {
                                 new BestMove(-INFTY),
                                 new BestMove(INFTY),
                                 endRoundTime);
-
-//      try {
-//          sleep(3000);
-//      } catch (InterruptedException e) {
-//          e.printStackTrace();
-//      }
       return bestMove.move;
   }
 }
